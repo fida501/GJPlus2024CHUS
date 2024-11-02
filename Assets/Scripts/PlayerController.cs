@@ -14,15 +14,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetRotation;
 
     float rotationSpeed = 10f;
+
     [SerializeField] float speed = 200f;
 
     [SerializeField] private bool canMove;
 
     [SerializeField] Rigidbody rb;
 
-    [SerializeField] private GameObject treeTarget;
-
     [SerializeField] private Animator animator;
+
+    public bool isMoving;
+
+    private bool isFacingTarget = false;
 
     private void FixedUpdate()
     {
@@ -31,6 +34,12 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+        if (!canMove)
+        {
+            rb.velocity = Vector3.zero;
+            return;
+        }
+
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
@@ -55,45 +64,74 @@ public class PlayerController : MonoBehaviour
             targetRotation = Quaternion.LookRotation(input).eulerAngles;
         }
 
-        // rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x, MathF.Round(targetRotation.y / 45) * 45, targetRotation.z);
         rb.rotation = Quaternion.Slerp(transform.rotation,
             Quaternion.Euler(targetRotation.x, Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z),
             Time.deltaTime * rotationSpeed);
 
         Vector3 vel = input * speed * Time.deltaTime;
-        if (!canMove)
-        {
-            vel = Vector3.zero;
-        }
-        
+
         rb.velocity = vel;
         animator.SetBool("IsMoving", vel != Vector3.zero);
+        isMoving = vel != Vector3.zero;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Call this method with the target GameObject you want the object to face
+    public void FaceTarget(GameObject target)
     {
-        if (other.CompareTag("Pohon"))
+        if (!isFacingTarget && target != null) // Ensure coroutine only starts once per call
         {
-            treeTarget = other.gameObject;
-            ButtonManager.instance.buttonTreeChop.SetActive(true);
+            StartCoroutine(FaceTargetCoroutine(target));
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private IEnumerator FaceTargetCoroutine(GameObject objectToFace)
     {
-        if (other.CompareTag("Pohon"))
+        isFacingTarget = true;
+
+        while (true)
         {
-            treeTarget = null;
-            ButtonManager.instance.buttonTreeChop.SetActive(false);
+            // Calculate the direction and target rotation
+            Vector3 direction = objectToFace.transform.position - transform.position;
+            direction.y = 0; // Ignore y-axis for horizontal rotation
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            // Rotate towards the target
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            // Check if we're close enough to stop rotating
+            if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+            {
+                transform.rotation = targetRotation; // Snap to target rotation
+                break;
+            }
+
+            yield return null;
         }
+
+        isFacingTarget = false;
     }
 
-    public void ChopTree()
+    public void SetCanMove(bool value)
     {
-        treeTarget.SetActive(false);
-        treeTarget = null;
-        ButtonManager.instance.buttonTreeChop.SetActive(false);
-        GameManager.instance.player.AddWood(1);
-        UIManager.instance.SetWoodText(GameManager.instance.player.Wood);
+        canMove = value;
+    }
+
+    public void BackToIdleFromLoot()
+    {
+        animator.SetBool("IsLooting", false);
+    }
+
+    public void StartLootingAnimation()
+    {
+        animator.SetBool("IsLooting", true);
+    }
+
+    public void CollectResource()
+    {
+        GameManager.instance.CollectObject();
+        GameManager.instance.gatherObjectGameObject.SetActive(false);
+        GameManager.instance.gatherObjectGameObject = null;
+        SetCanMove(true);
+        ButtonManager.instance.buttonGatherResource.SetActive(false);
     }
 }

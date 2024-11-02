@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public TMP_Text woodText;
+    public TMP_Text rockText;
     private StringBuilder _stringBuilder = new StringBuilder();
 
     private void Awake()
@@ -28,5 +29,13 @@ public class UIManager : MonoBehaviour
         _stringBuilder.Append("Wood: ");
         _stringBuilder.Append(amount);
         woodText.text = _stringBuilder.ToString();
+    }
+    
+    public void SetRockText(int amount)
+    {
+        _stringBuilder.Clear();
+        _stringBuilder.Append("Rock: ");
+        _stringBuilder.Append(amount);
+        rockText.text = _stringBuilder.ToString();
     }
 }

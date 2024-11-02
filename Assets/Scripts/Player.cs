@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private int wood = 0;
+    [SerializeField] private int wood = 0;
+    [SerializeField] private int rock = 0;
 
     public int Wood
     {
@@ -20,5 +21,21 @@ public class Player : MonoBehaviour
     public void RemoveWood(int amount)
     {
         wood -= amount;
+    }
+    
+    public int Rock
+    {
+        get { return rock; }
+        set { rock = value; }
+    }
+    
+    public void AddRock(int amount)
+    {
+        rock += amount;
+    }
+    
+    public void RemoveRock(int amount)
+    {
+        rock -= amount;
     }
 }
