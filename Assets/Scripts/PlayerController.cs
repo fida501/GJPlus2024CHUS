@@ -14,13 +14,15 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetRotation;
 
     float rotationSpeed = 10f;
-    float speed = 200f;
+    [SerializeField] float speed = 200f;
 
     [SerializeField] private bool canMove;
 
     [SerializeField] Rigidbody rb;
 
     [SerializeField] private GameObject treeTarget;
+
+    [SerializeField] private Animator animator;
 
     private void FixedUpdate()
     {
@@ -63,8 +65,9 @@ public class PlayerController : MonoBehaviour
         {
             vel = Vector3.zero;
         }
-
+        
         rb.velocity = vel;
+        animator.SetBool("IsMoving", vel != Vector3.zero);
     }
 
     private void OnTriggerEnter(Collider other)
