@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 31b4680c885636047b28722213c11aac, type: 3}
       propertyPath: m_Name
-      value: Cotton_2
+      value: Binkoi
       objectReference: {fileID: 0}
     - target: {fileID: 6034546913005800261, guid: 31b4680c885636047b28722213c11aac, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -101,7 +101,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7144380308380215272}
     - renderer: {fileID: 2320581663074469824}
-  - screenRelativeHeight: 0.1
+  - screenRelativeHeight: 0.006011058
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7144380308380215272}
