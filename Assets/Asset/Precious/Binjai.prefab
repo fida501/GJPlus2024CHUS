@@ -50,7 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 31b4680c885636047b28722213c11aac, type: 3}
       propertyPath: m_Name
-      value: Binkoi
+      value: Binjai
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 31b4680c885636047b28722213c11aac, type: 3}
+      propertyPath: m_TagString
+      value: Gatherable
       objectReference: {fileID: 0}
     - target: {fileID: 6034546913005800261, guid: 31b4680c885636047b28722213c11aac, type: 3}
       propertyPath: m_Materials.Array.data[0]
