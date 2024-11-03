@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public Player player;
     public PlayerDetector playerDetector;
     public GameObject gatherObjectGameObject;
+    public Raft raft;
+
     private void Awake()
     {
         if (instance == null)
@@ -24,12 +26,12 @@ public class GameManager : MonoBehaviour
     public void CollectObject()
     {
         GatherObject gatherObject = gatherObjectGameObject.GetComponent<GatherObject>();
-        if(gatherObject.ResourceType == "Batu")
+        if (gatherObject.ResourceType == "Batu")
         {
             player.AddRock(gatherObject.Amount);
             UIManager.instance.SetRockText(player.Rock);
         }
-        else if(gatherObject.ResourceType == "Kayu")
+        else if (gatherObject.ResourceType == "Kayu")
         {
             player.AddWood(gatherObject.Amount);
             UIManager.instance.SetWoodText(player.Wood);

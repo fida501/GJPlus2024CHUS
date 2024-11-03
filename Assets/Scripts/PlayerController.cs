@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
     public void BackToIdleFromLoot()
     {
         animator.SetBool("IsLooting", false);
+        animator.SetBool("IsPunching", false);
         isGathering = false;
     }
 
@@ -130,16 +131,38 @@ public class PlayerController : MonoBehaviour
         isGathering = true;
     }
 
+    public void StartPunchingAnimation()
+    {
+        animator.SetBool("IsPunching", true);
+    }
+
     public void CollectResource()
     {
         GameManager.instance.CollectObject();
         // check if list 0
         if (GameManager.instance.playerDetector._gatherableList.Count < 1)
         {
-            GameManager.instance.gatherObjectGameObject.SetActive(false);
+            ButtonManager.instance.buttonGatherResource.SetActive(false);
         }
+
+        GameManager.instance.gatherObjectGameObject.SetActive(false);
         GameManager.instance.gatherObjectGameObject = null;
         SetCanMove(true);
-        ButtonManager.instance.buttonGatherResource.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BuildArea"))
+        {
+            ButtonManager.instance.buttonBuildRaft.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("BuildArea"))
+        {
+            ButtonManager.instance.buttonBuildRaft.SetActive(false);
+        }
     }
 }
