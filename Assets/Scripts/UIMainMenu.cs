@@ -7,7 +7,7 @@ public class UIMainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadSceneAsync("Play 1");
+        SceneManager.LoadSceneAsync("Play 2");
     }
 
 }

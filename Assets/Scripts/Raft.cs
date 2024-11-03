@@ -7,6 +7,10 @@ public class Raft : MonoBehaviour
     public int woodNeeded = 10;
     public int rockNeeded = 10;
     public int raftPhase = 0;
+    public GameObject raftPhase1;
+    public GameObject raftPhase2;
+    public GameObject raftPhase3;
+    
 
     public void BuildRaft()
     {
@@ -27,8 +31,17 @@ public class Raft : MonoBehaviour
 
     public void CheckRaft()
     {
-        if (raftPhase == 3)
+        if (raftPhase == 1)
         {
+            raftPhase1.SetActive(true);
+        }
+        else if (raftPhase == 2)
+        {
+            raftPhase2.SetActive(true);
+        }
+        else if (raftPhase == 3)
+        {
+            raftPhase3.SetActive(true);
             GameManager.instance.WinGame();
         }
     }

@@ -165,4 +165,10 @@ public class PlayerController : MonoBehaviour
             ButtonManager.instance.buttonBuildRaft.SetActive(false);
         }
     }
+
+    public void Die()
+    {
+        this.gameObject.SetActive(false);
+        GameManager.instance.LoseGame();
+    }
 }
