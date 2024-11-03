@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     public bool isMoving;
 
+    public bool isGathering;
+
     private bool isFacingTarget = false;
 
     private void FixedUpdate()
@@ -119,17 +121,23 @@ public class PlayerController : MonoBehaviour
     public void BackToIdleFromLoot()
     {
         animator.SetBool("IsLooting", false);
+        isGathering = false;
     }
 
     public void StartLootingAnimation()
     {
         animator.SetBool("IsLooting", true);
+        isGathering = true;
     }
 
     public void CollectResource()
     {
         GameManager.instance.CollectObject();
-        GameManager.instance.gatherObjectGameObject.SetActive(false);
+        // check if list 0
+        if (GameManager.instance.playerDetector._gatherableList.Count < 1)
+        {
+            GameManager.instance.gatherObjectGameObject.SetActive(false);
+        }
         GameManager.instance.gatherObjectGameObject = null;
         SetCanMove(true);
         ButtonManager.instance.buttonGatherResource.SetActive(false);

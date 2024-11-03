@@ -22,29 +22,51 @@ public class ButtonManager : MonoBehaviour
 
     public void GatherResource()
     {
-        if (GameManager.instance.playerController.isMoving)
-        {
-            return;
-        }
-        if (GameManager.instance.playerDetector._gatherableList.Count < 1)
+        if (GameManager.instance.playerController.isMoving || GameManager.instance.playerController.isGathering )
         {
             return;
         }
         
-        GameObject objectToGather = GameManager.instance.playerDetector._gatherableList[0];
+        if (GameManager.instance.playerDetector._gatherableList.Count < 1)
+        {
+            return;
+        }
+
+        // GameObject objectToGather = GameManager.instance.playerDetector._gatherableList[0];
+        GameObject objectToGather = CheckClosestGatherable(GameManager.instance.playerDetector._gatherableList);
         GatherObject gatherObject = objectToGather.GetComponent<GatherObject>();
         GameManager.instance.playerController.SetCanMove(false);
         GameManager.instance.playerController.FaceTarget(objectToGather);
+        GameManager.instance.gatherObjectGameObject = objectToGather;
         if (gatherObject.ResourceType == "Batu")
         {
-            GameManager.instance.gatherObjectGameObject = objectToGather;
             GameManager.instance.playerController.StartLootingAnimation();
         }
         else if (gatherObject.ResourceType == "Kayu")
         {
             // GameManager.instance.player.AddWood(gatherObject.Amount);
             // UIManager.instance.SetWoodText(GameManager.instance.player.Wood);
+            
         }
+
         GameManager.instance.playerDetector._gatherableList.Remove(objectToGather);
+    }
+
+    public GameObject CheckClosestGatherable(List<GameObject> gatherableList)
+    {
+        GameObject closestGatherable = null;
+        float closestDistance = Mathf.Infinity;
+        foreach (GameObject gatherable in gatherableList)
+        {
+            float distance = Vector3.Distance(GameManager.instance.playerController.transform.position,
+                gatherable.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestGatherable = gatherable;
+            }
+        }
+
+        return closestGatherable;
     }
 }
