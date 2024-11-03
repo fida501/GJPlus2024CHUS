@@ -6,7 +6,7 @@ using UnityEngine;
 public class ButtonManager : MonoBehaviour
 {
     public GameObject buttonGatherResource;
-
+    public GameObject buttonBuildRaft;
     public static ButtonManager instance;
 
     private void Awake()
@@ -22,11 +22,11 @@ public class ButtonManager : MonoBehaviour
 
     public void GatherResource()
     {
-        if (GameManager.instance.playerController.isMoving || GameManager.instance.playerController.isGathering )
+        if (GameManager.instance.playerController.isMoving || GameManager.instance.playerController.isGathering)
         {
             return;
         }
-        
+
         if (GameManager.instance.playerDetector._gatherableList.Count < 1)
         {
             return;
@@ -44,9 +44,12 @@ public class ButtonManager : MonoBehaviour
         }
         else if (gatherObject.ResourceType == "Kayu")
         {
-            // GameManager.instance.player.AddWood(gatherObject.Amount);
-            // UIManager.instance.SetWoodText(GameManager.instance.player.Wood);
-            
+            GameManager.instance.playerController.StartPunchingAnimation();
+        } else
+        {
+            GameManager.instance.playerController.SetCanMove(true);
+            Debug.Log("Resource type not found");
+            return;
         }
 
         GameManager.instance.playerDetector._gatherableList.Remove(objectToGather);
@@ -68,5 +71,17 @@ public class ButtonManager : MonoBehaviour
         }
 
         return closestGatherable;
+    }
+    
+    public void BuildRaft()
+    {
+        if (GameManager.instance.playerController.isMoving || GameManager.instance.playerController.isGathering)
+        {
+            return;
+        }
+
+        GameManager.instance.playerController.SetCanMove(false);
+        GameManager.instance.raft.BuildRaft();
+        GameManager.instance.playerController.SetCanMove(true);
     }
 }
