@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     public void SetWoodText(int amount)
     {
         _stringBuilder.Clear();
-        _stringBuilder.Append("Wood: ");
+        _stringBuilder.Append("X ");
         _stringBuilder.Append(amount);
         woodText.text = _stringBuilder.ToString();
     }
@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     public void SetRockText(int amount)
     {
         _stringBuilder.Clear();
-        _stringBuilder.Append("Rock: ");
+        _stringBuilder.Append("X ");
         _stringBuilder.Append(amount);
         rockText.text = _stringBuilder.ToString();
     }
