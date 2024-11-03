@@ -70,6 +70,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18458ab467c82864dbbd8e3555097f8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7874920535700886239}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18458ab467c82864dbbd8e3555097f8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -9214979426104681218}
   m_SourcePrefab: {fileID: 100100000, guid: 18458ab467c82864dbbd8e3555097f8e, type: 3}
 --- !u!1 &142648006745517254 stripped
 GameObject:
@@ -124,6 +127,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: -0.01, y: 0.017012795, z: 0.011791928}
   m_Center: {x: 0.000854125, y: 0, z: 0.0013210173}
+--- !u!114 &-9214979426104681218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142648006745517254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c86d8f073c98144395b464d431d3c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amount: 1
+  _resourceType: Batu
 --- !u!23 &1943925472854560019 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 18458ab467c82864dbbd8e3555097f8e, type: 3}
